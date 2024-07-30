@@ -51,7 +51,8 @@
   font-family: "now-light";
   margin: 2em 0;
   font-size: 2rem;
-  color: #fffffc;
+  color: var(--second-color);
+  font-weight: bold;
   background-color: transparent;
   border: none;
 }

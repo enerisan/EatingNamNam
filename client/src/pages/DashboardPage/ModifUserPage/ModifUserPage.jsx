@@ -1,4 +1,5 @@
-/* eslint-disable react/jsx-props-no-spreading */
+ 
+ /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable camelcase */
 import { useForm } from "react-hook-form";
 import "./ModifUserPage.css";
@@ -55,8 +56,13 @@ export default function ModifUserPage() {
   if (!currentUser) {
     return navigate("/connexion");
   }
+
   const onSubmit = async (formData) => {
     const data = { ...formData };
+
+    if (currentUser.role !== "admin") {
+      data.role = "user";
+    }
 
     try {
       await axios.put(
@@ -179,19 +185,22 @@ export default function ModifUserPage() {
             />
           </div>
 
-          <div className="card-role">
-            <label className="card-label" htmlFor="role">
-              Role :
-            </label>
-            <input
-              className="card-input"
-              defaultValue={role}
-              type="text"
-              {...register("role", {
-                required: "Le rôle est requis",
-              })}
-            />
-          </div>
+          {currentUser.role === "admin" && (
+            <div className="card-role">
+              <label className="card-label" htmlFor="role">
+                Role :
+              </label>
+              <input
+                className="card-input"
+                defaultValue={role}
+                type="text"
+                {...register("role", {
+                  required: "Le rôle est requis",
+                })}
+              />
+            </div>
+          )}
+
           <div className="btn-card-container">
             <button className="btn-card" type="submit">
               Modifier

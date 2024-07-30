@@ -26,7 +26,13 @@ ul {
 .hello {
   font-family: "now-medium";
   margin: 1rem;
-  color: #0e4749;
+  color: var(--second-color);
   font-weight: bold;
   text-align: center;
+}
+
+@media screen and (min-width: 768px) {
+  .hello {
+    font-size: 1.5rem;
+  }
 }

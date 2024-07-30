@@ -61,12 +61,15 @@ function RecipeTabs() {
           filteredRecipes.map((recipe) => (
             <div key={recipe.recipe_id} className="recipe-card">
               <h3>{recipe.recipe_name}</h3>
-              <img src={recipe.recipe_image} alt={recipe.recipe_name} />
-              <Link to={`/details/${recipe.recipe_id}`}>
-                <button type="button" className="buttonDetails">
-                  Details
-                </button>
-              </Link>
+              <div className="body-recipe-card">
+                {" "}
+                <img src={recipe.recipe_image} alt={recipe.recipe_name} />
+                <Link to={`/details/${recipe.recipe_id}`}>
+                  <button type="button" className="buttonDetails">
+                    Détails
+                  </button>
+                </Link>
+              </div>
             </div>
           ))}
       </div>

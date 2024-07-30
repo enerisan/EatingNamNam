@@ -73,8 +73,6 @@ function RecipeDetails() {
           <div className="customLine" />
 
           <p className="recipeDescription">{recipe_description}</p>
-
-          <p className="recipeDescription">{recipe_description}</p>
         </div>
         <div className="lineContainer">
           <h2 className="authorTitle">Auteur</h2>
