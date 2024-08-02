@@ -6,6 +6,15 @@ const { encodeJWT, decodeJWT } = require("../helpers/jwtHelpers");
 const login = async (req, res) => {
   const { email, password } = req.body;
 
+  const userConsent = req.cookies?.userConsent;
+
+  if (userConsent !== "true") {
+    return res.status(403).json({
+      message: "Vous devez accepter les cookies pour vous connecter",
+      showConsentBanner: true,
+    });
+  }
+
   const [user] = await tables.user.findUserByEmail(email);
 
   if (!user) {

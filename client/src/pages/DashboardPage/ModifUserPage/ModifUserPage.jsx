@@ -1,5 +1,4 @@
- 
- /* eslint-disable react/jsx-props-no-spreading */
+/* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable camelcase */
 import { useForm } from "react-hook-form";
 import "./ModifUserPage.css";

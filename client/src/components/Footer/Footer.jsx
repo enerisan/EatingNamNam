@@ -14,6 +14,9 @@ export default function Footer() {
       <NavLink to="/conditionsgenerales" className="footer-link">
         Conditions Générales
       </NavLink>
+      <NavLink to="/cookies-consent" className="footer-link">
+        Gestion Cookies
+      </NavLink>
     </div>
   );
 }

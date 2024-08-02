@@ -16,6 +16,7 @@ const ingredientRouter = require("./ingredient/router");
 const recipeLabelRouter = require("./recipeLabel/router");
 const recipeIngredientRouter = require("./recipeIngredient/router");
 const authRouter = require("./auth/router");
+const cookieConsentRouter = require("./cookies/router");
 
 router.use("/user", userRouter);
 router.use("/menu", menuRouter);
@@ -27,6 +28,7 @@ router.use("/ingredient", ingredientRouter);
 router.use("/recipe-label", recipeLabelRouter);
 router.use("/recipe-ingredient", recipeIngredientRouter);
 router.use("/auth", authRouter);
+router.use("/cookies", cookieConsentRouter);
 
 /* ************************************************************************* */
 

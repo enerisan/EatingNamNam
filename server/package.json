@@ -18,7 +18,8 @@
     "jsonwebtoken": "^9.0.2",
     "mysql2": "^3.6.7",
     "react-hook-form": "^7.52.0",
-    "zod": "^3.23.8"
+    "zod": "^3.23.8",
+    "react-cookie-consent": "^9.0.0"
   },
   "devDependencies": {
     "@faker-js/faker": "^8.4.1",
@@ -28,7 +29,8 @@
     "jest": "^29.7.0",
     "nodemon": "^3.1.0",
     "prettier": "3.2.5",
-    "supertest": "^7.0.0"
+    "supertest": "^7.0.0",
+    "react-cookie-consent": "^9.0.0"
   },
   "lint-staged": {
     "*.sql": "prettier --check",
