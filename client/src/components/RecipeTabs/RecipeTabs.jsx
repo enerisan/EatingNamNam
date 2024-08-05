@@ -1,35 +1,35 @@
-import { useLoaderData, Link } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useLoaderData, Link, useOutletContext } from "react-router-dom";
+import { useState } from "react";
 import "./RecipeTabs.css";
 
 function RecipeTabs() {
-  const recipeLabelData = useLoaderData();
+  const recipes = useLoaderData();
+  const { currentUser } = useOutletContext();
 
   const [activeTab, setActiveTab] = useState("");
-  const [latestRecipes, setLatestRecipes] = useState([]);
 
-  useEffect(() => {
-    const sortedRecipes = [...recipeLabelData].sort(
-      (a, b) => new Date(b.recipe_date) - new Date(a.recipe_date)
-    );
-    setLatestRecipes(sortedRecipes.slice(0, 10));
-  }, [recipeLabelData]);
-
-  const handleTabChange = (tab) => {
-    setActiveTab(tab);
-  };
+  const [filteredRecipes, setFilteredRecipes] = useState(recipes);
 
   const filterRecipes = (tab) => {
-    if (tab === "") return latestRecipes;
-    return recipeLabelData.filter((label) => {
-      if (tab === "végétarien") return label.label_id === 2;
-      if (tab === "sans gluten") return label.label_id === 3;
-      if (tab === "sans lactose") return label.label_id === 1;
+    const visibleRecipes = currentUser ? recipes : recipes.slice(0, 10);
+    if (tab === "") return visibleRecipes;
+    return visibleRecipes.filter((recipe) => {
+      if (tab === "végétarien") return recipe.labels.includes("Végétarien");
+      if (tab === "sans gluten") return recipe.labels.includes("Sans gluten");
+      if (tab === "sans lactose") return recipe.labels.includes("Sans lactose");
       return false;
     });
   };
 
-  const filteredRecipes = filterRecipes(activeTab);
+  const handleTabChange = (tab) => {
+    if (activeTab === tab) {
+      setActiveTab("");
+      setFilteredRecipes(currentUser ? recipes : recipes.slice(0, 10));
+    } else {
+      setActiveTab(tab);
+      setFilteredRecipes(filterRecipes(tab));
+    }
+  };
 
   return (
     <div className="recipes-container">
@@ -56,15 +56,15 @@ function RecipeTabs() {
           Sans Lactose
         </button>
       </div>
+
       <div className="all-recipes">
         {filteredRecipes &&
           filteredRecipes.map((recipe) => (
-            <div key={recipe.recipe_id} className="recipe-card">
-              <h3>{recipe.recipe_name}</h3>
+            <div key={recipe.id} className="recipe-card">
+              <h3>{recipe.name}</h3>
               <div className="body-recipe-card">
-                {" "}
-                <img src={recipe.recipe_image} alt={recipe.recipe_name} />
-                <Link to={`/details/${recipe.recipe_id}`}>
+                <img src={recipe.image} alt={recipe.name} />
+                <Link to={`/details/${recipe.id}`}>
                   <button type="button" className="buttonDetails">
                     Détails
                   </button>

@@ -30,6 +30,7 @@ export default function DashboardPage() {
     Dimanche: menus[6] || {},
   };
 
+  const userBadges = data.user.filter((u) => u.badge_id);
   const { currentUser } = useOutletContext();
 
   useEffect(() => {
@@ -140,8 +141,8 @@ export default function DashboardPage() {
           <div className="container-badges-planning">
             <div className="container-badges">
               <h1>Mes badges</h1>
-              {data.user.badge_id ? (
-                data.user.map((u) => (
+              {userBadges.length > 0 ? (
+                userBadges.map((u) => (
                   <img
                     key={u.id}
                     src={u.badge_image}

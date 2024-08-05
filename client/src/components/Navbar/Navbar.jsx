@@ -29,7 +29,7 @@ export default function Navbar({ currentUser, setCurrentUser }) {
         </button>
         <Menu currentUser={currentUser} setCurrentUser={setCurrentUser} />
       </div>
-      <Searchbar />
+      <Searchbar currentUser={currentUser} />
       {currentUser ? (
         <ButtonLogout
           currentUser={currentUser}

@@ -1,8 +1,9 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useOutletContext } from "react-router-dom";
 import "./HomePage.css";
 import RecipeTabs from "../../components/RecipeTabs/RecipeTabs";
 
 function HomePage() {
+  const { currentUser } = useOutletContext();
   const navigate = useNavigate();
 
   const handleConnection = () => {
@@ -38,7 +39,11 @@ function HomePage() {
       </div>
 
       <div className="recipe">
-        <h1>Découvrez les 10 dernières recettes postées :</h1>
+        {currentUser === null ? (
+          <h1>Découvrez les 10 dernières recettes postées :</h1>
+        ) : (
+          <h1>Découvrez toutes les recettes</h1>
+        )}
         <RecipeTabs />
       </div>
     </div>
