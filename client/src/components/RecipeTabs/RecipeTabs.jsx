@@ -8,8 +8,6 @@ function RecipeTabs() {
 
   const [activeTab, setActiveTab] = useState("");
 
-  const [filteredRecipes, setFilteredRecipes] = useState(recipes);
-
   const filterRecipes = (tab) => {
     const visibleRecipes = currentUser ? recipes : recipes.slice(0, 10);
     if (tab === "") return visibleRecipes;
@@ -22,14 +20,10 @@ function RecipeTabs() {
   };
 
   const handleTabChange = (tab) => {
-    if (activeTab === tab) {
-      setActiveTab("");
-      setFilteredRecipes(currentUser ? recipes : recipes.slice(0, 10));
-    } else {
-      setActiveTab(tab);
-      setFilteredRecipes(filterRecipes(tab));
-    }
+    setActiveTab(activeTab === tab ? "" : tab);
   };
+
+  const filteredRecipes = filterRecipes(activeTab);
 
   return (
     <div className="recipes-container">
