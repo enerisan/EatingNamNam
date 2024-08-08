@@ -76,9 +76,6 @@
   text-align: center;
 }
 
-.ingredient-card-ad:hover {
-  width: 22rem;
-}
 .img-ingredient-cont {
   margin: 1rem 0rem;
 }
@@ -123,17 +120,11 @@
   }
 
   .ingredient-card-ad {
-    height: 28rem;
     width: 15%;
   }
 
   .img-ingre-ad {
-    height: 14rem;
-  }
-
-  .ingredient-card-ad:hover {
-    height: 29rem;
-    width: 17%;
+    height: 12rem;
   }
 
   .btn-add-ingredient {

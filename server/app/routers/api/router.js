@@ -17,6 +17,7 @@ const recipeLabelRouter = require("./recipeLabel/router");
 const recipeIngredientRouter = require("./recipeIngredient/router");
 const authRouter = require("./auth/router");
 const cookieConsentRouter = require("./cookies/router");
+const userFavoriteRecipeRouter = require("./userFavoriteRecipe/router");
 
 router.use("/user", userRouter);
 router.use("/menu", menuRouter);
@@ -29,7 +30,7 @@ router.use("/recipe-label", recipeLabelRouter);
 router.use("/recipe-ingredient", recipeIngredientRouter);
 router.use("/auth", authRouter);
 router.use("/cookies", cookieConsentRouter);
-
+router.use("/favorite", userFavoriteRecipeRouter);
 /* ************************************************************************* */
 
 module.exports = router;

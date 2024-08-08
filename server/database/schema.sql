@@ -73,6 +73,14 @@ CREATE TABLE comment (
     FOREIGN KEY (recipe_id) REFERENCES recipe (id) ON DELETE CASCADE
 );
 
+CREATE TABLE user_favorite_recipe (
+    id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    user_id INT NOT NULL,
+    recipe_id INT NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES user (id) ON DELETE RESTRICT,
+    FOREIGN KEY (recipe_id) REFERENCES recipe (id) ON DELETE CASCADE
+);
+
 CREATE TABLE user_menu_recipe (
     id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
     recipe_id INT NOT NULL,

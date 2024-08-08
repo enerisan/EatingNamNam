@@ -1,0 +1,48 @@
+.favorites-container {
+  display: flex;
+  flex-direction: column;
+  margin: 2rem 1rem 0rem 1rem;
+  padding: 2rem;
+  border: 2px solid var(--main-color);
+  gap: 1rem;
+}
+
+.favorite-card {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  align-items: center;
+}
+
+.img-favorite-container {
+  height: 60px;
+}
+
+.img-favorite {
+  height: 100%;
+  border-radius: 1rem;
+}
+
+.favorite-name {
+  font-family: "now-light";
+  font-size: 0.8rem;
+}
+
+@media screen and (min-width: 768px) {
+  .favorites-container {
+    margin: 5rem 10rem 0rem 10rem;
+  }
+
+  .favorite-card {
+    padding: 0rem 18rem;
+  }
+
+  .img-favorite-container {
+    height: 200px;
+  }
+
+  .favorite-name {
+    font-family: "now-light";
+    font-size: 1.2rem;
+  }
+}

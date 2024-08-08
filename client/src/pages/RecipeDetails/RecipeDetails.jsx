@@ -1,12 +1,18 @@
 /* eslint-disable camelcase */
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useOutletContext } from "react-router-dom";
 import "./RecipeDetails.css";
+import axios from "axios";
+import { toast } from "react-toastify";
+import { useState } from "react";
 import BackButton from "../../components/BackButton/BackButton";
 
 function RecipeDetails() {
   const data = useLoaderData();
 
+  const currentUser = useOutletContext();
+
   const {
+    id,
     recipe_name,
     recipe_number_of_people,
     recipe_description,
@@ -22,6 +28,28 @@ function RecipeDetails() {
   const month = postDate.getMonth() + 1;
   const year = postDate.getFullYear();
   const formattedDate = `${day}/${month}/${year}`;
+
+  const userId = currentUser.currentUser.id;
+
+  const [isFavorite, setIsFavorite] = useState(false);
+
+  const handleFavorite = async () => {
+    const favorite = {
+      user_id: userId,
+      recipe_id: id,
+    };
+
+    try {
+      await axios.post(
+        `${import.meta.env.VITE_API_URL}/api/favorite`,
+        favorite
+      );
+      setIsFavorite(true);
+      toast.success("Votre recette a bien été ajoutée comme favorite");
+    } catch (err) {
+      toast.error("Une erreur es survenue, veuillez réessayer ultérieurement");
+    }
+  };
 
   return (
     <div>
@@ -46,8 +74,12 @@ function RecipeDetails() {
           <button type="button" className="planning">
             📅 Ajouter au planning
           </button>
-          <button type="button" className="favoris">
-            Mettre en favoris 🧡
+          <button
+            type="button"
+            className="favoris"
+            onClick={currentUser ? handleFavorite : null}
+          >
+            {isFavorite ? "Mise en favoris 🧡" : "Mettre en favoris 🖤"}
           </button>
         </div>
 

@@ -8,6 +8,7 @@ const LabelRepository = require("./models/LabelRepository");
 const BadgeRepository = require("./models/BadgeRepository");
 const RecipeLabelRepository = require("./models/RecipeLabelRepository");
 const RecipeIngredientRepository = require("./models/RecipeIngredientRepository");
+const UserFavoriteRecipeRepository = require("./models/UserFavoriteRecipeRepository");
 // Create an empty object to hold data repositories for different tables
 const tables = {};
 
@@ -25,6 +26,7 @@ tables.label = new LabelRepository();
 tables.badge = new BadgeRepository();
 tables.recipeLabel = new RecipeLabelRepository();
 tables.recipeIngredient = new RecipeIngredientRepository();
+tables.userFavoriteRecipe = new UserFavoriteRecipeRepository();
 
 /* ************************************************************************* */
 

@@ -87,7 +87,7 @@ export default function DashboardPage() {
           </li>
           <li>
             <NavLink
-              to="/favourites"
+              to={`/user/favorites/${user_id}`}
               className={({ isActive }) =>
                 isActive ? "links-dashboard-active" : "links-dashboard"
               }
