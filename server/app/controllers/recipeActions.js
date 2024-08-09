@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 const tables = require("../../database/tables");
 
 const browse = async (req, res, next) => {
@@ -15,6 +16,7 @@ const read = async (req, res, next) => {
     if (ingredients == null) {
       res.sendStatus(404);
     }
+
     const recipeIngredients = await tables.recipe.readRecipeIngredients(
       req.params.id
     );
@@ -23,38 +25,73 @@ const read = async (req, res, next) => {
     }
 
     const recipeUser = await tables.recipe.readRecipeUser(req.params.id);
-
     if (recipeUser == null) {
       res.sendStatus(404);
     }
+
+    const recipeLabels = await tables.recipeLabel.readLabelsByRecipeId(
+      req.params.id
+    );
+
     const data = {
       ingredients,
       recipeIngredients,
       recipeUser,
+      recipeLabels,
     };
+
     res.json(data);
   } catch (err) {
     next(err);
   }
 };
+
 const edit = async (req, res, next) => {
-  const recipe = { ...req.body, id: req.params.id };
+  const recipe = { ...req.body.recipe, id: req.params.id };
+  const { ingredients = [], labels = [] } = req.body;
+
   try {
     await tables.recipe.update(recipe);
+
+    await tables.recipeIngredient.deleteByRecipeId(recipe.id);
+
+    await Promise.all(
+      ingredients.map((ingredient) =>
+        tables.recipeIngredient.create({
+          recipe_id: recipe.id,
+          ingredient_id: ingredient.id,
+          quantity: ingredient.quantity,
+        })
+      )
+    );
+
+    await tables.recipeLabel.deleteByRecipeId(recipe.id);
+
+    await Promise.all(
+      labels.map((label_id) =>
+        tables.recipeLabel.create({
+          recipe_id: recipe.id,
+          label_id,
+        })
+      )
+    );
+
     res.sendStatus(204);
   } catch (err) {
+    console.error(err);
     next(err);
   }
 };
 
 const add = async (req, res, next) => {
-  const { recipe, ingredient } = req.body;
+  const { recipe, ingredients } = req.body;
   try {
     const insertId = await tables.recipe.create(recipe);
-    const ingredientInsert = ingredient.map(async (i) => {
+    const ingredientInsert = ingredients.map(async (i) => {
       await tables.recipeIngredient.create({
         recipe_id: insertId,
         ingredient_id: i.id,
+        quantity: i.quantity,
       });
     });
 
@@ -64,6 +101,7 @@ const add = async (req, res, next) => {
     next(err);
   }
 };
+
 const destroy = async (req, res, next) => {
   const { id } = req.params;
   try {

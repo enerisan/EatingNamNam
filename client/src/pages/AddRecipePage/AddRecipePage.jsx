@@ -59,12 +59,18 @@ export default function AddRecipePage() {
   const onSubmit = async (data) => {
     const myObj = {};
 
-    myObj.recipe = { data, user_id: currentUser.id, badge_id: 1 };
-    myObj.ingredient = ingredientsSelected;
+    myObj.recipe = { data: { ...data }, user_id: currentUser.id };
+    myObj.ingredients = ingredientsSelected.map((ingredient) => ({
+      id: ingredient.id,
+      quantity: ingredient.quantity,
+    }));
 
     try {
       await axios.post(`${import.meta.env.VITE_API_URL}/api/recipe`, myObj);
-      toast.success("Votre recette a bien été ajoutée!");
+      toast.success(
+        "Votre recette a bien été ajoutée et est maintenant en attente de validation.",
+        navigate(`/user/recipes/${currentUser.id}`)
+      );
     } catch (err) {
       console.error(err);
       toast.error("Une erreur est survenue, veuillez réessayer ultérieurement");
@@ -93,8 +99,11 @@ export default function AddRecipePage() {
     setSuggestions([]);
   };
 
-  const selectIngredient = (ingredient) => {
-    setIngredientsSelected((prevSelected) => [...prevSelected, ingredient]);
+  const selectIngredient = (ingredient, quantity) => {
+    setIngredientsSelected((prevSelected) => [
+      ...prevSelected,
+      { ...ingredient, quantity },
+    ]);
     setValue("");
     setSuggestions([]);
   };
@@ -148,10 +157,10 @@ export default function AddRecipePage() {
               placeholder="Écrivez le nom de votre recette"
               {...register("name", {
                 required: "Le nom de la recette est obligatoire",
-                pattern: {
-                  value: /^([A-Z][A-Za-z ,.'`-]{3,150})$/,
+                minLength: {
+                  value: 3,
                   message:
-                    "Le nom de la recette ne doit contenir que des lettres",
+                    "Le nom de la recette doit contenir au moins 3 caractères",
                 },
               })}
             />
@@ -241,7 +250,7 @@ export default function AddRecipePage() {
             </div>
             <p>Ingrédients ajoutés :</p>
             <ul>
-              {ingredientsSelected.map((ingredient) => (
+              {ingredientsSelected.map((ingredient, index) => (
                 <li key={ingredient.id}>
                   {ingredient.name}
                   <button
@@ -251,6 +260,34 @@ export default function AddRecipePage() {
                   >
                     ✖
                   </button>
+                  <input
+                    type="number"
+                    className="quantity"
+                    name={`quantity-${index}`}
+                    placeholder="Quantité (en grammes)"
+                    {...register("quantity", {
+                      required: "La quantité est obligatoire",
+                      pattern: {
+                        value: /^[0-9]+$/,
+                        message:
+                          "La quantité ne doit contenir que des chiffres",
+                      },
+                    })}
+                    value={ingredient.quantity}
+                    onChange={(e) => {
+                      const newQuantity = e.target.value;
+                      setIngredientsSelected((prevSelected) =>
+                        prevSelected.map((ing, i) =>
+                          i === index ? { ...ing, quantity: newQuantity } : ing
+                        )
+                      );
+                    }}
+                  />
+                  {errors.quantity && (
+                    <span className="recipeCreationError">
+                      {errors.quantity.message}
+                    </span>
+                  )}
                 </li>
               ))}
             </ul>
@@ -267,6 +304,11 @@ export default function AddRecipePage() {
               cols="33"
               {...register("description", {
                 required: "Une description est obligatoire",
+                minLength: {
+                  value: 30,
+                  message:
+                    "La description doit contenir au moins 30 caractères",
+                },
               })}
             />
             {errors.description && (

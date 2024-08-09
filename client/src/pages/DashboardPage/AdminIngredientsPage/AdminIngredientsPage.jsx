@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { useEffect } from "react";
 import axios from "axios";
 import {
@@ -7,6 +8,7 @@ import {
   NavLink,
 } from "react-router-dom";
 import "./AdminIngredientsPage.css";
+import { toast } from "react-toastify";
 import BackButton from "../../../components/BackButton/BackButton";
 
 export default function AdminIngredientsPage() {
@@ -39,6 +41,21 @@ export default function AdminIngredientsPage() {
   if (!currentUser) {
     return navigate("/connexion");
   }
+
+  const handleDeleteIngredient = async (ingredient_id) => {
+    try {
+      axios.delete(
+        `${import.meta.env.VITE_API_URL}/api/ingredient/${ingredient_id}`,
+        ingredients
+      );
+      toast.success("Ingredient éliminé correctement");
+      navigate("/admin/ingredients");
+    } catch (error) {
+      toast.error(
+        "Une erreur s'est produite. Veuillez réessayer ultérieurement"
+      );
+    }
+  };
 
   return (
     <div className="ingredients-body">
@@ -120,11 +137,20 @@ export default function AdminIngredientsPage() {
                 <p>Calories : {i.calories}</p>
               </div>
             </div>
-            <NavLink to={`/admin/ingredient/modif/${i.id}`}>
-              <button type="button" className="buttonDetails-ingredientcard">
-                Plus de détails
+            <div className="btns-modif-supr">
+              <NavLink to={`/admin/ingredient/modif/${i.id}`}>
+                <button type="button" className="buttonDetails-ingredientcard">
+                  Modifier
+                </button>
+              </NavLink>
+              <button
+                type="button"
+                className="buttonDetails-ingredientcard"
+                onClick={() => handleDeleteIngredient(i.id)}
+              >
+                Supprimer
               </button>
-            </NavLink>
+            </div>
           </div>
         ))}
       </div>

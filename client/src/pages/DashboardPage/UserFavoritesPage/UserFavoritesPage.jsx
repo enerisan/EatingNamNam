@@ -1,5 +1,6 @@
 /* eslint-disable camelcase */
-import { useEffect } from "react";
+
+import { useState, useEffect } from "react";
 import "./UserFavoritesPage.css";
 import axios from "axios";
 import {
@@ -10,11 +11,13 @@ import {
 } from "react-router-dom";
 import { toast } from "react-toastify";
 import BackButton from "../../../components/BackButton/BackButton";
+import AddRecipeButton from "../../../components/AddRecipeButton/AddRecipeButton";
 
 export default function UserFavoritesPage() {
   const navigate = useNavigate();
   const { currentUser } = useOutletContext();
-  const favorites = useLoaderData();
+  const initialFavorites = useLoaderData();
+  const [favorites, setFavorites] = useState(initialFavorites);
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -42,21 +45,23 @@ export default function UserFavoritesPage() {
   const handleDeleteFavorite = async (favorite_id) => {
     try {
       await axios.delete(
-        `${import.meta.env.VITE_API_URL}/api/favorite/${favorite_id}`,
-        favorites
+        `${import.meta.env.VITE_API_URL}/api/favorite/${favorite_id}`
       );
       toast.success("Favori éliminé correctement");
+      setFavorites(favorites.filter((fav) => fav.favorite_id !== favorite_id));
     } catch (error) {
       console.error("Erreur");
-      toast.error("Un erreur s´est produit.Veuillez reessayer ultérieurement");
+      toast.error(
+        "Une erreur s'est produite. Veuillez réessayer ultérieurement"
+      );
     }
   };
   return (
     <div className="recipes-body-user">
-      <BackButton />
-      <NavLink to="/ajout-recette" className="btn-add-recipe">
-        Ajouter une nouvelle recette
-      </NavLink>
+      <div className="high-page-recipe">
+        <BackButton />
+        <AddRecipeButton />
+      </div>
       <ul className="list-dashboard">
         <li>
           <NavLink

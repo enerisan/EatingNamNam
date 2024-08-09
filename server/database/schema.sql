@@ -52,14 +52,10 @@ CREATE TABLE recipe (
     description TEXT NOT NULL,
     image TEXT NOT NULL,
     date DATETIME DEFAULT NOW(),
-    is_favorite BOOLEAN DEFAULT false,
-    vote INT UNSIGNED DEFAULT 0,
     set_up_time INT UNSIGNED NOT NULL,
     is_validated BOOLEAN DEFAULT false,
     user_id INT NOT NULL,
-    badge_id INT NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES user (id) ON DELETE RESTRICT,
-    FOREIGN KEY (badge_id) REFERENCES badge (id)
+    FOREIGN KEY (user_id) REFERENCES user (id) ON DELETE RESTRICT
 );
 
 CREATE TABLE comment (

@@ -21,6 +21,10 @@
   font-family: "now-medium";
   src: url("/fonts/NowAlt-Medium.otf");
 }
+
+.backBtn-addRecipeBtn {
+  display: flex;
+}
 .recipes-body-user {
   padding: 0.5rem;
   margin-bottom: 8rem;

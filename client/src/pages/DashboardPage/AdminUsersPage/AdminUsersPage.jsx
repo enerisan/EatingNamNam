@@ -8,6 +8,7 @@ import {
 } from "react-router-dom";
 import "./AdminUsersPage.css";
 import BackButton from "../../../components/BackButton/BackButton";
+import AddRecipeButton from "../../../components/AddRecipeButton/AddRecipeButton";
 
 export default function AdminUsersPage() {
   const navigate = useNavigate();
@@ -42,7 +43,10 @@ export default function AdminUsersPage() {
 
   return (
     <>
-      <BackButton />
+      <div className="high-page-recipe">
+        <BackButton />
+        <AddRecipeButton />
+      </div>
       <ul className="list-dashboard">
         <li>
           <NavLink

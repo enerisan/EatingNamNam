@@ -10,6 +10,7 @@ import {
 } from "react-router-dom";
 import BackButton from "../../components/BackButton/BackButton";
 import "./DashboardPage.css";
+import AddRecipeButton from "../../components/AddRecipeButton/AddRecipeButton";
 
 export default function DashboardPage() {
   const data = useLoaderData();
@@ -63,7 +64,10 @@ export default function DashboardPage() {
   if (role !== "admin") {
     return (
       <>
-        <BackButton />
+        <div className="high-page-recipe">
+          <BackButton />
+          <AddRecipeButton />
+        </div>
         <ul className="list-dashboard">
           <li>
             <NavLink
@@ -185,7 +189,10 @@ export default function DashboardPage() {
   // Affichage pour role = admin :
   return (
     <>
-      <BackButton />
+      <div className="high-page-recipe">
+        <BackButton />
+        <AddRecipeButton />
+      </div>
       <ul className="list-dashboard">
         <li>
           <NavLink

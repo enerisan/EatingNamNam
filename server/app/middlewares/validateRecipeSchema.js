@@ -1,12 +1,9 @@
 /* eslint-disable camelcase */
 const { z } = require("zod");
 
-const recipeNameRegex = /^([A-Z][A-Za-z ,.'`-]{3,150})$/;
-
 const recipeSchema = z.object({
-  name: z.string().regex(recipeNameRegex, {
-    message:
-      "Le nom de votre recette doit contenir entre 3 et 150 caractères, sans aucun chiffre",
+  name: z.string({
+    required_error: "Le nom de la recette est obligatoire",
   }),
   number_of_people: z
     .number({
@@ -16,8 +13,12 @@ const recipeSchema = z.object({
     })
     .int()
     .positive(),
-  description: z.string().min(30),
-  image: z.string().url(),
+  description: z.string().min(30, {
+    message: "La description doit contenir au moins 30 caractères",
+  }),
+  image: z.string().url({
+    message: "Veuillez entrer une URL valide",
+  }),
   set_up_time: z
     .number({
       required_error: "Le temps de préparation doit être précisé",

@@ -54,7 +54,8 @@ export default function IngredientPage() {
 
     try {
       await axios.post(`${import.meta.env.VITE_API_URL}/api/ingredient`, data);
-      toast.success("Votre formulaire a bien été soumis");
+      toast.success("Votre ingrédient a été ajouté avec succès.");
+      navigate("/ajout-recette");
     } catch (err) {
       console.error(err);
       toast.error("Une erreur es survenue, veuillez réessayer ultérieurement");

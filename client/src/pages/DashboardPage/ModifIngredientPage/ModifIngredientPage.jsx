@@ -70,24 +70,13 @@ export default function ModifIngredientPage() {
       );
 
       toast.success("Modification effectuée avec succès");
+      navigate("/admin/ingredients");
     } catch (err) {
       console.error(err);
       toast.error("Une erreur es survenue, veuillez réessayer ultérieurement");
     }
   };
 
-  const handleDelete = async () => {
-    try {
-      await axios.delete(
-        `${import.meta.env.VITE_API_URL}/api/ingredient/${id}`
-      );
-      toast.success("Ingrédient supprimé avec succès");
-      navigate("/admin/ingredients");
-    } catch (err) {
-      console.error(err);
-      toast.error("Une erreur est survenue, veuillez réessayer ultérieurement");
-    }
-  };
   const nutritionalValidationRules = {
     required: "Ce champ est requis",
     valueAsNumber: true,
@@ -267,15 +256,6 @@ export default function ModifIngredientPage() {
             </button>
           </div>
         </form>
-        <div className="btn-delete-container">
-          <button
-            className="btn-ingredient-delete"
-            type="button"
-            onClick={handleDelete}
-          >
-            Supprimer l'ingrédient
-          </button>
-        </div>
       </div>
     </>
   );

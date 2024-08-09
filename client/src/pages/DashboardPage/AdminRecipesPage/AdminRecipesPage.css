@@ -30,21 +30,6 @@
   align-items: center;
 }
 
-.btn-add-recipe {
-  margin-left: 1rem;
-  text-decoration: none;
-  font-family: "now-medium";
-  background-color: var(--main-color);
-  color: black;
-  border-radius: 1rem;
-  padding: 0.5rem 0.5rem;
-  font-size: 14px;
-}
-
-.btn-add-recipe:hover {
-  background-color: var(--second-color);
-  color: white;
-}
 .recipes-container-ad {
   display: flex;
   flex-direction: column;
@@ -117,12 +102,6 @@ p {
   .recipe-card-ad {
     height: 27rem;
     width: 15%;
-  }
-
-  .btn-add-recipe {
-    padding: 0.5rem 0.5rem;
-    font-size: 16px;
-    margin-right: 3rem;
   }
 
   .high-page-recipe {

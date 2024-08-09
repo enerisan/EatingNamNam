@@ -7,8 +7,12 @@ class RecipeIngredientRepository extends AbstractRepository {
 
   async create(recipeIngredient) {
     const [result] = await this.database.query(
-      `INSERT INTO ${this.table} (recipe_id, ingredient_id) VALUES (?, ?)`,
-      [recipeIngredient.recipe_id, recipeIngredient.ingredient_id]
+      `INSERT INTO ${this.table} (recipe_id, ingredient_id, quantity) VALUES (?, ?, ?)`,
+      [
+        recipeIngredient.recipe_id,
+        recipeIngredient.ingredient_id,
+        recipeIngredient.quantity,
+      ]
     );
 
     return result.insertId;
@@ -33,10 +37,11 @@ class RecipeIngredientRepository extends AbstractRepository {
 
   async update(recipeIngredient) {
     const [result] = await this.database.query(
-      `UPDATE ${this.table} SET recipe_id = ?, ingredient_id WHERE id = ?`,
+      `UPDATE ${this.table} SET recipe_id = ?, ingredient_id = ?, quantity = ? WHERE id = ?`,
       [
         recipeIngredient.recipe_id,
         recipeIngredient.ingredient_id,
+        recipeIngredient.quantity,
         recipeIngredient.id,
       ]
     );
@@ -51,6 +56,15 @@ class RecipeIngredientRepository extends AbstractRepository {
     );
 
     return result;
+  }
+
+  async deleteByRecipeId(recipeId) {
+    const [result] = await this.database.query(
+      `DELETE FROM ${this.table} WHERE recipe_id = ?`,
+      [recipeId]
+    );
+
+    return result.affectedRows;
   }
 }
 

@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { useEffect } from "react";
 import axios from "axios";
 import {
@@ -7,6 +8,7 @@ import {
   NavLink,
 } from "react-router-dom";
 import "./AdminRecipesPage.css";
+import { toast } from "react-toastify";
 import BackButton from "../../../components/BackButton/BackButton";
 
 export default function AdminRecipesPage() {
@@ -40,6 +42,22 @@ export default function AdminRecipesPage() {
     return navigate("/connexion");
   }
 
+  const handleDeleteRecipe = async (recipe_id) => {
+    try {
+      await axios.delete(
+        `${import.meta.env.VITE_API_URL}/api/recipe/${recipe_id}`,
+        {
+          withCredentials: true,
+        }
+      );
+      toast.success("Recette éliminée correctement");
+      navigate("/admin/recipes");
+    } catch (error) {
+      toast.error(
+        "Une erreur s'est produite. Veuillez réessayer ultérieurement"
+      );
+    }
+  };
   return (
     <div className="recipes-body">
       <div className="high-page-recipe">
@@ -117,11 +135,20 @@ export default function AdminRecipesPage() {
                 {r.is_validated ? "✔️ validée" : " ❌ En attente de validation"}
               </div>
             </div>
-            <NavLink to={`/admin/recipes/modif/${r.id}`}>
-              <button type="button" className="buttonDetails-recipecard">
-                Plus de détails
+            <div className="btns-modif-supr">
+              <NavLink to={`/admin/recipes/modif/${r.id}`}>
+                <button type="button" className="buttonDetails-recipecard">
+                  Modifier
+                </button>
+              </NavLink>
+              <button
+                type="button"
+                className="buttonDetails-recipecard"
+                onClick={() => handleDeleteRecipe(r.id)}
+              >
+                Supprimer
               </button>
-            </NavLink>
+            </div>
           </div>
         ))}
       </div>

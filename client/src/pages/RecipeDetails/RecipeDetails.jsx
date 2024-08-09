@@ -9,7 +9,7 @@ import BackButton from "../../components/BackButton/BackButton";
 function RecipeDetails() {
   const data = useLoaderData();
 
-  const currentUser = useOutletContext();
+  const { currentUser } = useOutletContext();
 
   const {
     id,
@@ -29,11 +29,15 @@ function RecipeDetails() {
   const year = postDate.getFullYear();
   const formattedDate = `${day}/${month}/${year}`;
 
-  const userId = currentUser.currentUser.id;
+  const userId = currentUser?.id;
 
   const [isFavorite, setIsFavorite] = useState(false);
 
   const handleFavorite = async () => {
+    if (!userId) {
+      toast.error("Vous devez être connecté pour ajouter aux favoris");
+      return;
+    }
     const favorite = {
       user_id: userId,
       recipe_id: id,
@@ -77,7 +81,8 @@ function RecipeDetails() {
           <button
             type="button"
             className="favoris"
-            onClick={currentUser ? handleFavorite : null}
+            onClick={handleFavorite}
+            disabled={isFavorite}
           >
             {isFavorite ? "Mise en favoris 🧡" : "Mettre en favoris 🖤"}
           </button>
@@ -96,6 +101,9 @@ function RecipeDetails() {
                   alt={ingredient.ingredient_name}
                 />
                 <p className="ingredientName">{ingredient.ingredient_name}</p>
+                <p className="ingredientQuantity">
+                  {ingredient.ingredient_quantity} gr
+                </p>
               </div>
             ))}
           </div>

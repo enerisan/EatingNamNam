@@ -7,7 +7,9 @@ import {
   useNavigate,
   useOutletContext,
 } from "react-router-dom";
+import { toast } from "react-toastify";
 import BackButton from "../../../components/BackButton/BackButton";
+import AddRecipeButton from "../../../components/AddRecipeButton/AddRecipeButton";
 
 export default function UserRecipesPage() {
   const navigate = useNavigate();
@@ -40,12 +42,20 @@ export default function UserRecipesPage() {
     return navigate("/connexion");
   }
 
+  const handleDetailsClick = (recipe) => {
+    if (recipe.is_validated) {
+      navigate(`/details/${recipe.recipe_id}`);
+    } else {
+      toast.warn("Cette recette est en attente de validation.");
+    }
+  };
+
   return (
     <div className="recipes-body-user">
-      <BackButton />
-      <NavLink to="/ajout-recette" className="btn-add-recipe">
-        Ajouter une nouvelle recette
-      </NavLink>
+      <div className="high-page-recipe">
+        <BackButton />
+        <AddRecipeButton />
+      </div>
       <ul className="list-dashboard">
         <li>
           <NavLink
@@ -102,11 +112,13 @@ export default function UserRecipesPage() {
               {r.is_validated ? "✔️ Validée" : " ❌ En attente de validation"}
               <p>📝{r.description.split(" ").slice(0, 8).join(" ")} ... </p>
             </div>
-            <NavLink to={`/admin/recipes/modif/${r.id}`}>
-              <button type="button" className="buttonDetails-recipecard-user">
-                Modifier
-              </button>
-            </NavLink>
+            <button
+              type="button"
+              className="buttonDetails-recipecard-user"
+              onClick={() => handleDetailsClick(r)}
+            >
+              Plus de détails
+            </button>
           </div>
         ))}
       </div>
