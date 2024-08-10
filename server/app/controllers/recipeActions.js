@@ -32,12 +32,23 @@ const read = async (req, res, next) => {
     const recipeLabels = await tables.recipeLabel.readLabelsByRecipeId(
       req.params.id
     );
+    if (recipeLabels == null) {
+      res.sendStatus(404);
+    }
+
+    const comments = await tables.comment.readCommentsByRecipeId(
+      req.params.id
+    );
+    if (comments == null) {
+      res.sendStatus(404);
+    }
 
     const data = {
       ingredients,
       recipeIngredients,
       recipeUser,
       recipeLabels,
+      comments,
     };
 
     res.json(data);
