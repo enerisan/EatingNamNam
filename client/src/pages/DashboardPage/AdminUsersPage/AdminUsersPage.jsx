@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { useEffect } from "react";
 import axios from "axios";
 import {
@@ -7,12 +8,13 @@ import {
   NavLink,
 } from "react-router-dom";
 import "./AdminUsersPage.css";
-import BackButton from "../../../components/BackButton/BackButton";
-import AddRecipeButton from "../../../components/AddRecipeButton/AddRecipeButton";
+import UserBar from "../../../components/UserBar/UserBar";
 
 export default function AdminUsersPage() {
   const navigate = useNavigate();
   const { currentUser } = useOutletContext();
+  const { role, id } = currentUser;
+  const user_id = id;
 
   const users = useLoaderData();
   useEffect(() => {
@@ -43,62 +45,7 @@ export default function AdminUsersPage() {
 
   return (
     <>
-      <div className="high-page-recipe">
-        <BackButton />
-        <AddRecipeButton />
-      </div>
-      <ul className="list-dashboard">
-        <li>
-          <NavLink
-            to={`/dashboard/${currentUser.id}`}
-            className={({ isActive }) =>
-              isActive ? "links-dashboard-active" : "links-dashboard"
-            }
-          >
-            Mon profil
-          </NavLink>
-        </li>
-        <li>
-          <NavLink
-            to="/admin/users"
-            className={({ isActive }) =>
-              isActive ? "links-dashboard-active" : "links-dashboard"
-            }
-          >
-            Utilisateurs
-          </NavLink>
-        </li>
-        <li>
-          <NavLink
-            to="/admin/recipes"
-            className={({ isActive }) =>
-              isActive ? "links-dashboard-active" : "links-dashboard"
-            }
-          >
-            Recettes
-          </NavLink>
-        </li>
-        <li>
-          <NavLink
-            to="/admin/ingredients"
-            className={({ isActive }) =>
-              isActive ? "links-dashboard-active" : "links-dashboard"
-            }
-          >
-            Ingredients
-          </NavLink>
-        </li>
-        <li>
-          <NavLink
-            to="/admin/commentaires"
-            className={({ isActive }) =>
-              isActive ? "links-dashboard-active" : "links-dashboard"
-            }
-          >
-            Commentaires
-          </NavLink>
-        </li>
-      </ul>
+      <UserBar role={role} user_id={user_id} />
       <div className="users-container-ad">
         {users.map((u) => (
           <div key={u.id} className="card-user-ad">

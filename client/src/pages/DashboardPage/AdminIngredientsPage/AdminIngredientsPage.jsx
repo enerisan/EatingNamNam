@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import {
   useLoaderData,
@@ -9,12 +9,15 @@ import {
 } from "react-router-dom";
 import "./AdminIngredientsPage.css";
 import { toast } from "react-toastify";
-import BackButton from "../../../components/BackButton/BackButton";
+import UserBar from "../../../components/UserBar/UserBar";
 
 export default function AdminIngredientsPage() {
   const navigate = useNavigate();
   const { currentUser } = useOutletContext();
-  const ingredients = useLoaderData();
+  const { role, id } = currentUser;
+  const user_id = id;
+  const initialIngredients = useLoaderData();
+  const [ingredients, setIngredients] = useState(initialIngredients);
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -44,12 +47,12 @@ export default function AdminIngredientsPage() {
 
   const handleDeleteIngredient = async (ingredient_id) => {
     try {
-      axios.delete(
+      await axios.delete(
         `${import.meta.env.VITE_API_URL}/api/ingredient/${ingredient_id}`,
         ingredients
       );
       toast.success("Ingredient éliminé correctement");
-      navigate("/admin/ingredients");
+      setIngredients(ingredients.filter((ing) => ing.id !== ingredient_id));
     } catch (error) {
       toast.error(
         "Une erreur s'est produite. Veuillez réessayer ultérieurement"
@@ -59,65 +62,7 @@ export default function AdminIngredientsPage() {
 
   return (
     <div className="ingredients-body">
-      <div className="high-page-ingredient">
-        <BackButton />
-        <NavLink to="/ingredient" className="btn-add-ingredient">
-          Ajouter un nouvel ingrédient
-        </NavLink>
-      </div>
-
-      <ul className="list-dashboard">
-        <li>
-          <NavLink
-            to={`/dashboard/${currentUser.id}`}
-            className={({ isActive }) =>
-              isActive ? "links-dashboard-active" : "links-dashboard"
-            }
-          >
-            Mon profil
-          </NavLink>
-        </li>
-        <li>
-          <NavLink
-            to="/admin/users"
-            className={({ isActive }) =>
-              isActive ? "links-dashboard-active" : "links-dashboard"
-            }
-          >
-            Utilisateurs
-          </NavLink>
-        </li>
-        <li>
-          <NavLink
-            to="/admin/recipes"
-            className={({ isActive }) =>
-              isActive ? "links-dashboard-active" : "links-dashboard"
-            }
-          >
-            Recettes
-          </NavLink>
-        </li>
-        <li>
-          <NavLink
-            to="/admin/ingredients"
-            className={({ isActive }) =>
-              isActive ? "links-dashboard-active" : "links-dashboard"
-            }
-          >
-            Ingredients
-          </NavLink>
-        </li>
-        <li>
-          <NavLink
-            to="/admin/commentaires"
-            className={({ isActive }) =>
-              isActive ? "links-dashboard-active" : "links-dashboard"
-            }
-          >
-            Commentaires
-          </NavLink>
-        </li>
-      </ul>
+      <UserBar role={role} user_id={user_id} />
 
       <div className="ingredients-container-ad">
         {ingredients.map((i) => (

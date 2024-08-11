@@ -3,20 +3,17 @@
 import { useState, useEffect } from "react";
 import "./UserFavoritesPage.css";
 import axios from "axios";
-import {
-  NavLink,
-  useNavigate,
-  useOutletContext,
-  useLoaderData,
-} from "react-router-dom";
+import { useNavigate, useOutletContext, useLoaderData } from "react-router-dom";
 import { toast } from "react-toastify";
-import BackButton from "../../../components/BackButton/BackButton";
-import AddRecipeButton from "../../../components/AddRecipeButton/AddRecipeButton";
+import UserBar from "../../../components/UserBar/UserBar";
 
 export default function UserFavoritesPage() {
   const navigate = useNavigate();
   const { currentUser } = useOutletContext();
   const initialFavorites = useLoaderData();
+  const { role, id } = currentUser;
+  const user_id = id;
+
   const [favorites, setFavorites] = useState(initialFavorites);
 
   useEffect(() => {
@@ -58,52 +55,7 @@ export default function UserFavoritesPage() {
   };
   return (
     <div className="recipes-body-user">
-      <div className="high-page-recipe">
-        <BackButton />
-        <AddRecipeButton />
-      </div>
-      <ul className="list-dashboard">
-        <li>
-          <NavLink
-            to={`/dashboard/${currentUser.id}`}
-            className={({ isActive }) =>
-              isActive ? "links-dashboard-active" : "links-dashboard"
-            }
-          >
-            Mon profil
-          </NavLink>
-        </li>
-        <li>
-          <NavLink
-            to={`/user/recipes/${currentUser.id}`}
-            className={({ isActive }) =>
-              isActive ? "links-dashboard-active" : "links-dashboard"
-            }
-          >
-            Mes recettes
-          </NavLink>
-        </li>
-        <li>
-          <NavLink
-            to={`/user/favorites/${currentUser.id}`}
-            className={({ isActive }) =>
-              isActive ? "links-dashboard-active" : "links-dashboard"
-            }
-          >
-            Mes favoris
-          </NavLink>
-        </li>
-        <li>
-          <NavLink
-            to="/notifications"
-            className={({ isActive }) =>
-              isActive ? "links-dashboard-active" : "links-dashboard"
-            }
-          >
-            Mes notifications
-          </NavLink>
-        </li>
-      </ul>
+      <UserBar role={role} user_id={user_id} />
       <div className="favorites-container">
         {favorites.map((r) => (
           <div className="favorite-card" key={r.favorite_id}>

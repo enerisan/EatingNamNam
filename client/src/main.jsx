@@ -14,6 +14,7 @@ import AdminUsersPage from "./pages/DashboardPage/AdminUsersPage/AdminUsersPage"
 import ModifUserPage from "./pages/DashboardPage/ModifUserPage/ModifUserPage";
 import AdminRecipesPage from "./pages/DashboardPage/AdminRecipesPage/AdminRecipesPage";
 import AdminIngredientsPage from "./pages/DashboardPage/AdminIngredientsPage/AdminIngredientsPage";
+import AdminCommentsPage from "./pages/DashboardPage/AdminCommentsPage/AdminCommentsPage";
 import ModifIngredientPage from "./pages/DashboardPage/ModifIngredientPage/ModifIngredientPage";
 import UserRecipesPage from "./pages/DashboardPage/UserRecipesPage/UserRecipesPage";
 import CookieConsentPage from "./pages/CookieConsentPage/CookieConsentPage";
@@ -92,6 +93,11 @@ const router = createBrowserRouter([
         path: "/admin/ingredient/modif/:id",
         element: <ModifIngredientPage />,
         loader: ({ params }) => fetch(`${express}/api/ingredient/${params.id}`),
+      },
+      {
+        path: "/admin/comments",
+        element: <AdminCommentsPage />,
+        loader: () => fetch(`${express}/api/comment`),
       },
 
       {

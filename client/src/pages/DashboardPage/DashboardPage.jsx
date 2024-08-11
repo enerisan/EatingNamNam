@@ -1,5 +1,4 @@
 /* eslint-disable camelcase */
-
 import axios from "axios";
 import { useEffect } from "react";
 import {
@@ -8,15 +7,12 @@ import {
   useOutletContext,
   useNavigate,
 } from "react-router-dom";
-import BackButton from "../../components/BackButton/BackButton";
+import UserBar from "../../components/UserBar/UserBar";
 import "./DashboardPage.css";
-import AddRecipeButton from "../../components/AddRecipeButton/AddRecipeButton";
 
 export default function DashboardPage() {
   const data = useLoaderData();
-
   const navigate = useNavigate();
-
   const { firstname, lastname, pseudo, image_profile, email, role, user_id } =
     data.user[0];
   const menus = data.menu.slice(0, 7);
@@ -59,89 +55,49 @@ export default function DashboardPage() {
   if (!currentUser) {
     return navigate("/connexion");
   }
-  // Affichage pour role = user :
 
-  if (role !== "admin") {
-    return (
-      <>
-        <div className="high-page-recipe">
-          <BackButton />
-          <AddRecipeButton />
-        </div>
-        <ul className="list-dashboard">
-          <li>
-            <NavLink
-              to="."
-              className={({ isActive }) =>
-                isActive ? "links-dashboard-active" : "links-dashboard"
-              }
-            >
-              Mon profil
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to={`/user/recipes/${user_id}`}
-              className={({ isActive }) =>
-                isActive ? "links-dashboard-active" : "links-dashboard"
-              }
-            >
-              Mes recettes
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to={`/user/favorites/${user_id}`}
-              className={({ isActive }) =>
-                isActive ? "links-dashboard-active" : "links-dashboard"
-              }
-            >
-              Mes favoris
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to="/notifications"
-              className={({ isActive }) =>
-                isActive ? "links-dashboard-active" : "links-dashboard"
-              }
-            >
-              Mes notifications
-            </NavLink>
-          </li>
-        </ul>
-        <div className="body-dashboard">
-          <div
+  return (
+    <>
+      <UserBar role={role} user_id={user_id} />
+
+      <div className="body-dashboard">
+        <div
+          className={
+            role === "user" ? "container-infos" : "container-infos-admin"
+          }
+        >
+          <img
             className={
-              role === "user" ? "container-infos" : "container-infos-admin"
+              role === "user" ? "img-profile-user" : "image-profile-admin"
             }
-          >
-            <img
-              className="img-profile-user"
-              src={image_profile}
-              alt="avatar"
-            />
-            <div className="infos">
-              <div className="pseudo">
-                <h2>{pseudo}</h2>
-              </div>
-              <div className="cle">
-                <h2>
-                  {firstname} {lastname}
-                </h2>
-              </div>
-              <div className="cle">
-                <h2>{email}</h2>
-              </div>
-
-              <NavLink
-                to={`/admin/users/modif/${user_id}`}
-                className="button-modify"
-              >
-                Modifier mon profil
-              </NavLink>
+            src={image_profile}
+            alt="avatar"
+          />
+          <div className="infos">
+            <div className="pseudo">
+              <h2>{pseudo}</h2>
             </div>
+            <div className="cle">
+              <h2>
+                {firstname} {lastname}
+              </h2>
+            </div>
+            <div className="cle">
+              <h2>{email}</h2>
+            </div>
+
+            <NavLink
+              to={`/admin/users/modif/${user_id}`}
+              className={
+                role === "user" ? "button-modify" : "button-modify-admin"
+              }
+            >
+              Modifier mon profil
+            </NavLink>
           </div>
+        </div>
+
+        {role === "user" ? (
           <div className="container-badges-planning">
             <div className="container-badges">
               <h1>Mes badges</h1>
@@ -182,119 +138,28 @@ export default function DashboardPage() {
               </div>
             </div>
           </div>
-        </div>
-      </>
-    );
-  }
-  // Affichage pour role = admin :
-  return (
-    <>
-      <div className="high-page-recipe">
-        <BackButton />
-        <AddRecipeButton />
-      </div>
-      <ul className="list-dashboard">
-        <li>
-          <NavLink
-            to="."
-            className={({ isActive }) =>
-              isActive ? "links-dashboard-active" : "links-dashboard"
-            }
-          >
-            Mon profil
-          </NavLink>
-        </li>
-        <li>
-          <NavLink
-            to="/admin/users"
-            className={({ isActive }) =>
-              isActive ? "links-dashboard-active" : "links-dashboard"
-            }
-          >
-            Utilisateurs
-          </NavLink>
-        </li>
-        <li>
-          <NavLink
-            to="/admin/recipes"
-            className={({ isActive }) =>
-              isActive ? "links-dashboard-active" : "links-dashboard"
-            }
-          >
-            Recettes
-          </NavLink>
-        </li>
-        <li>
-          <NavLink
-            to="/admin/ingredients"
-            className={({ isActive }) =>
-              isActive ? "links-dashboard-active" : "links-dashboard"
-            }
-          >
-            Ingredients
-          </NavLink>
-        </li>
-        <li>
-          <NavLink
-            to="/admin/commentaires"
-            className={({ isActive }) =>
-              isActive ? "links-dashboard-active" : "links-dashboard"
-            }
-          >
-            Commentaires
-          </NavLink>
-        </li>
-      </ul>
-      <div className="body-dashboard">
-        <div className="container-infos-admin">
-          <img
-            className="image-profile-admin"
-            src={image_profile}
-            alt="avatar"
-          />
-          <div className="infos">
-            <div className="pseudo">
-              <h2>{pseudo}</h2>
-            </div>
-            <div className="cle">
-              <h2>
-                {firstname} {lastname}
-              </h2>
-            </div>
-            <div className="cle">
-              <h2>{email}</h2>
-            </div>
-
-            <NavLink
-              to={`/admin/users/modif/${user_id}`}
-              className={
-                role === "user" ? "button-modify" : "button-modify-admin"
-              }
-            >
-              Modifier mon profil
-            </NavLink>
-          </div>
-        </div>
-        <div className="container-dash-admin">
-          <NavLink to="/admin/users" className="container-admin">
-            <h1>Utilisateurs</h1>
-          </NavLink>
-          <div className="container-admin">
-            <NavLink to="/admin/recipes" className="container-admin">
-              <h1>Recettes</h1>
-            </NavLink>
-          </div>
-          <div className="container-admin">
-            <NavLink to="/admin/ingredients" className="container-admin">
-              <h1>Ingredients</h1>
-            </NavLink>
-          </div>
-          <div className="container-admin">
+        ) : (
+          <div className="container-dash-admin">
             <NavLink to="/admin/users" className="container-admin">
-              <h1>Commentaires</h1>
+              <h1>Utilisateurs</h1>
             </NavLink>
+            <div className="container-admin">
+              <NavLink to="/admin/recipes" className="container-admin">
+                <h1>Recettes</h1>
+              </NavLink>
+            </div>
+            <div className="container-admin">
+              <NavLink to="/admin/ingredients" className="container-admin">
+                <h1>Ingredients</h1>
+              </NavLink>
+            </div>
+            <div className="container-admin">
+              <NavLink to="/admin/comments" className="container-admin">
+                <h1>Commentaires</h1>
+              </NavLink>
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </>
   );

@@ -36,9 +36,7 @@ const read = async (req, res, next) => {
       res.sendStatus(404);
     }
 
-    const comments = await tables.comment.readCommentsByRecipeId(
-      req.params.id
-    );
+    const comments = await tables.comment.readCommentsByRecipeId(req.params.id);
     if (comments == null) {
       res.sendStatus(404);
     }

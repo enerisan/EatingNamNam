@@ -13,7 +13,7 @@ export default function ButtonLogout({ setCurrentUser }) {
       });
 
       setCurrentUser(null);
-      navigate("/");
+      navigate("/connexion");
     } catch (e) {
       console.error(e);
     }

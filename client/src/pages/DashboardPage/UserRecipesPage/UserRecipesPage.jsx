@@ -1,20 +1,19 @@
+/* eslint-disable camelcase */
 import { useEffect } from "react";
 import "./UserRecipePage.css";
 import axios from "axios";
-import {
-  NavLink,
-  useLoaderData,
-  useNavigate,
-  useOutletContext,
-} from "react-router-dom";
+import { useLoaderData, useNavigate, useOutletContext } from "react-router-dom";
 import { toast } from "react-toastify";
-import BackButton from "../../../components/BackButton/BackButton";
-import AddRecipeButton from "../../../components/AddRecipeButton/AddRecipeButton";
+
+import UserBar from "../../../components/UserBar/UserBar";
 
 export default function UserRecipesPage() {
   const navigate = useNavigate();
   const { currentUser } = useOutletContext();
   const data = useLoaderData();
+
+  const user = data.user[0];
+  const { role, user_id } = user;
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -51,77 +50,34 @@ export default function UserRecipesPage() {
   };
 
   return (
-    <div className="recipes-body-user">
-      <div className="high-page-recipe">
-        <BackButton />
-        <AddRecipeButton />
-      </div>
-      <ul className="list-dashboard">
-        <li>
-          <NavLink
-            to={`/dashboard/${currentUser.id}`}
-            className={({ isActive }) =>
-              isActive ? "links-dashboard-active" : "links-dashboard"
-            }
-          >
-            Mon profil
-          </NavLink>
-        </li>
-        <li>
-          <NavLink
-            to={`/user/recipes/${currentUser.id}`}
-            className={({ isActive }) =>
-              isActive ? "links-dashboard-active" : "links-dashboard"
-            }
-          >
-            Mes recettes
-          </NavLink>
-        </li>
-        <li>
-          <NavLink
-            to={`/user/favorites/${currentUser.id}`}
-            className={({ isActive }) =>
-              isActive ? "links-dashboard-active" : "links-dashboard"
-            }
-          >
-            Mes favoris
-          </NavLink>
-        </li>
-        <li>
-          <NavLink
-            to="/notifications"
-            className={({ isActive }) =>
-              isActive ? "links-dashboard-active" : "links-dashboard"
-            }
-          >
-            Mes notifications
-          </NavLink>
-        </li>
-      </ul>
-      <div className="recipes-container-user">
-        {data.recipes.map((r) => (
-          <div className="recipe-card-user" key={r.id}>
-            <h3>{r.recipe_name}</h3>
-            <div className="img-recipe-container-user">
-              <img className="img-recipe-user" src={r.image} alt={r.name} />
-            </div>
+    <>
+      <UserBar role={role} user_id={user_id} />
+      <div className="recipes-body-user">
+        <div className="recipes-container-user">
+          {data.recipes.map((r) => (
+            <div className="recipe-card-user" key={r.id}>
+              <h3>{r.recipe_name}</h3>
+              <div className="img-recipe-container-user">
+                <img className="img-recipe-user" src={r.image} alt={r.name} />
+              </div>
 
-            <div className="recipe-infos-user">
-              <p>😋 Recette pour {r.number_of_people} personnes </p>
-              <p>⏰ Temps de prép. : {r.set_up_time}´</p>
-              {r.is_validated ? "✔️ Validée" : " ❌ En attente de validation"}
-              <p>📝{r.description.split(" ").slice(0, 8).join(" ")} ... </p>
+              <div className="recipe-infos-user">
+                <p>😋 Recette pour {r.number_of_people} personnes </p>
+                <p>⏰ Temps de prép. : {r.set_up_time}´</p>
+                {r.is_validated ? "✔️ Validée" : " ❌ En attente de validation"}
+                <p>📝{r.description.split(" ").slice(0, 8).join(" ")} ... </p>
+              </div>
+              <button
+                type="button"
+                className="buttonDetails-recipecard-user"
+                onClick={() => handleDetailsClick(r)}
+              >
+                Plus de détails
+              </button>
             </div>
-            <button
-              type="button"
-              className="buttonDetails-recipecard-user"
-              onClick={() => handleDetailsClick(r)}
-            >
-              Plus de détails
-            </button>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
-    </div>
+    </>
   );
 }

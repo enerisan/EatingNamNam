@@ -1,0 +1,24 @@
+.list-dashboard {
+  display: flex;
+  list-style: none;
+  justify-content: space-around;
+  font-family: "Aleo-Black";
+  text-align: center;
+  font-size: 0.8rem;
+  margin: 1rem;
+}
+.links-dashboard {
+  color: #87a3a3;
+  text-decoration: none;
+  font-size: 0.7rem;
+}
+
+.links-dashboard:hover {
+  color: var(--main-color);
+}
+
+.links-dashboard-active {
+  color: var(--second-color);
+  text-decoration-color: var(--main-color);
+  text-underline-offset: 1rem;
+}
