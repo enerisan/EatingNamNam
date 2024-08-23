@@ -17,7 +17,7 @@ router.get("/", browse);
 
 router.get("/:id", read);
 
-router.put("/:id", hashPassword, edit);
+router.put("/:id", validateUserSchema, hashPassword, edit);
 
 router.post("/register", validateUserSchema, hashPassword, add);
 

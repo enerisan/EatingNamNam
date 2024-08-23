@@ -72,8 +72,15 @@ export default function ModifIngredientPage() {
       toast.success("Modification effectuée avec succès");
       navigate("/admin/ingredients");
     } catch (err) {
-      console.error(err);
-      toast.error("Une erreur es survenue, veuillez réessayer ultérieurement");
+      if (err.response && err.response.data) {
+        const serverErrors = err.response.data;
+        const errorMessages = Object.values(serverErrors).join(", ");
+        toast.error(`Erreur: ${errorMessages}`);
+      } else {
+        toast.error(
+          "Une erreur est survenue, veuillez réessayer ultérieurement"
+        );
+      }
     }
   };
 
@@ -134,20 +141,26 @@ export default function ModifIngredientPage() {
             <label htmlFor="category" className="label-field">
               Catégorie
             </label>
-            <input
-              type="text"
+            <select
               name="category"
-              className="input-field-ingredient"
+              className="input-field"
               defaultValue={category}
               {...register("category", {
                 required: "Ce champ est requis",
-                minLength: {
-                  value: 2,
-                  message:
-                    "Le nom de la category doit contenir au minimun 2 caractères",
-                },
               })}
-            />
+            >
+              <option value="">Sélectionnez une catégorie</option>
+              <option value="Fruit">Fruit</option>
+              <option value="Légume">Légume</option>
+              <option value="Légumineuse">Légumineuse</option>
+              <option value="Produit laitier">Produit laitier</option>
+              <option value="Viande">Viande</option>
+              <option value="Céréale">Céréale</option>
+              <option value="Épice">Épice</option>
+              <option value="Fruit de mer/Poisson">Fruit de mer/Poisson</option>
+              <option value="Fruit à coque">Fruit à coque</option>
+              <option value="Huile">Huile</option>
+            </select>
             {errors.category && (
               <span className="error-ingredient">
                 {errors.category.message}

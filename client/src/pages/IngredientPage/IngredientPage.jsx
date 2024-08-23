@@ -17,8 +17,15 @@ export default function IngredientPage() {
     formState: { errors },
   } = useForm();
 
+  const userId = currentUser ? currentUser.id : null;
+
   useEffect(() => {
     const checkAuth = async () => {
+      if (!currentUser) {
+        navigate("/connexion");
+        return;
+      }
+
       try {
         const response = await axios.get(
           `${import.meta.env.VITE_API_URL}/api/auth/checkauth`,
@@ -32,23 +39,19 @@ export default function IngredientPage() {
         }
       } catch (e) {
         console.error(e);
-        navigate("connexion");
+        navigate("/connexion");
       }
     };
 
     checkAuth();
   }, [currentUser, navigate]);
 
-  if (!currentUser) {
-    return navigate("/connexion");
-  }
-
-  const userId = currentUser.id;
   const onSubmit = async (formData) => {
     const data = { ...formData };
 
     if (!data.image) {
-      data.image = "images/Logo_foodtastics.png";
+      data.image =
+        "https://cdn.pixabay.com/photo/2012/04/18/20/29/sugar-37802_960_720.png";
     }
     data.user_id = userId;
 
@@ -57,8 +60,15 @@ export default function IngredientPage() {
       toast.success("Votre ingrédient a été ajouté avec succès.");
       navigate("/ajout-recette");
     } catch (err) {
-      console.error(err);
-      toast.error("Une erreur es survenue, veuillez réessayer ultérieurement");
+      if (err.response && err.response.data) {
+        const serverErrors = err.response.data;
+        const errorMessages = Object.values(serverErrors).join(", ");
+        toast.error(`Erreur: ${errorMessages}`);
+      } else {
+        toast.error(
+          "Une erreur est survenue, veuillez réessayer ultérieurement"
+        );
+      }
     }
   };
 
@@ -121,23 +131,28 @@ export default function IngredientPage() {
           <label htmlFor="category" className="label-field">
             Catégorie
           </label>
-          <input
-            type="text"
+          <select
             name="category"
             className="input-field"
             {...register("category", {
               required: "Ce champ est requis",
-              minLength: {
-                value: 2,
-                message:
-                  "Le nom de la category doit contenir au minimun 2 caractères",
-              },
             })}
-          />
+          >
+            <option value="">Sélectionnez une catégorie</option>
+            <option value="Fruit">Fruit</option>
+            <option value="Légume">Légume</option>
+            <option value="Légumineuse">Légumineuse</option>
+            <option value="Produit laitier">Produit laitier</option>
+            <option value="Viande">Viande</option>
+            <option value="Céréale">Céréale</option>
+            <option value="Épice">Épice</option>
+            <option value="Fruit de mer/Poisson">Fruit de mer/Poisson</option>
+            <option value="Fruit à coque">Fruit à coque</option>
+            <option value="Huile">Huile</option>
+          </select>
           {errors.category && (
             <span className="error-ingredient">{errors.category.message}</span>
           )}
-
           {errors.image && (
             <span className="error-ingredient">{errors.image.message}</span>
           )}

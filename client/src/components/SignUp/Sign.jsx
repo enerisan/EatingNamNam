@@ -151,6 +151,9 @@ export default function Sign() {
               "Les mots de passe ne correspondent pas",
           })}
         />
+        {errors.confirmpassword && (
+          <span className="error"> {errors.confirmpassword.message}</span>
+        )}
         <button className="btn-sign" type="submit">
           S'inscrire
         </button>

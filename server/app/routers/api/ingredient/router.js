@@ -15,7 +15,7 @@ const validateIngredientSchema = require("../../../middlewares/validateIngredien
 router.get("/", browse);
 router.get("/:id", read);
 router.post("/", validateIngredientSchema, add);
-router.put("/:id", edit);
+router.put("/:id", validateIngredientSchema, edit);
 router.delete("/:id", destroy);
 
 module.exports = router;

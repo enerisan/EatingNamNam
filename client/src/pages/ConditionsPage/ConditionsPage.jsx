@@ -59,6 +59,16 @@ function ConditionsPage() {
             reproduire sur le site www.eatingnammam.fr ou sur tout autre
             support.
           </p>
+          <h2> Traitement des Données Personnelles</h2>
+          <p>
+            Nous informons les utilisateurs que les données personnelles
+            collectées via notre application seront conservées tant que votre
+            compte reste actif et qu'aucune demande de suppression n'a été
+            formulée. Vous avez le droit d'accéder à vos données personnelles,
+            de les modifier, et de demander leur suppression à tout moment. Pour
+            exercer ces droits, vous pouvez nous contacter à l'adresse suivante
+            : contact@eatingnammam.fr
+          </p>
         </div>
       </div>
     </>

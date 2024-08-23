@@ -6,12 +6,16 @@ const ingredientSchema = z.object({
       invalid_type_error: "Saissisez un nom d'ingrédient valide",
     })
     .min(2, {
-      message: "votre ingredient doit contenir au minimun 2 charactères",
+      message: "Votre ingrédient doit contenir au minimum 2 caractères",
+    })
+    .regex(/^[A-Za-zÀ-ÖØ-ÿ\s]+$/, {
+      message:
+        "Le nom de l'ingrédient doit contenir uniquement des lettres et des espaces",
     }),
 
   category: z.string({
     invalid_type_error:
-      "Saissisez une catégorie valide entre végétarien, Végétalien, Sans gluten, Sans lactose, Cétogène, Pescétarien",
+      "Saissisez une catégorie valide entre Fruit, Légume, Légumineuse, Produit laitier, Viande, Céréale, Épice, Fruit de mer/Poisson, Fruit à coque, Huile ",
   }),
 
   calories: z.number({

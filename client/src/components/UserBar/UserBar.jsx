@@ -22,7 +22,7 @@ export default function UserBar({ role, user_id }) {
       <ul className="list-dashboard">
         <li>
           <NavLink
-            to={`/user/dashboard/${user_id}`}
+            to={`/dashboard/${user_id}`}
             className={({ isActive }) =>
               isActive ? "links-dashboard-active" : "links-dashboard"
             }

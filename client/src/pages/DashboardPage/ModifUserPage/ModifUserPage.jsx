@@ -13,6 +13,7 @@ export default function ModifUserPage() {
   const navigate = useNavigate();
   const { currentUser } = useOutletContext();
   const user = useLoaderData();
+
   const {
     user_id,
     firstname,
@@ -102,6 +103,7 @@ export default function ModifUserPage() {
                 required: "Le pseudo est requis",
               })}
             />
+            {errors.pseudo && <span>{errors.pseudo.message}</span>}
           </div>
           <div className="card-prenom-nom">
             <label className="card-label" htmlFor="firstname">
@@ -112,10 +114,18 @@ export default function ModifUserPage() {
               className="card-input"
               defaultValue={firstname}
               {...register("firstname", {
-                minLength: 2,
+                minLength: {
+                  value: 2,
+                  message: "Le prénom doit contenir au moins 2 caractères",
+                },
                 required: "Le prénom est requis",
+                pattern: {
+                  value: /^[A-Za-z]+$/,
+                  message: "Le prénom ne doit contenir que des lettres",
+                },
               })}
             />
+            {errors.firstname && <span>{errors.firstname.message}</span>}
             <label className="card-label" htmlFor="lastname">
               Nom:
             </label>
@@ -124,10 +134,18 @@ export default function ModifUserPage() {
               className="card-input"
               defaultValue={lastname}
               {...register("lastname", {
-                minLength: 2,
+                minLength: {
+                  value: 2,
+                  message: "Le nom doit contenir au moins 2 caractères",
+                },
                 required: "Le nom est requis",
+                pattern: {
+                  value: /^[A-Za-z]+$/,
+                  message: "Le nom ne doit contenir que des lettres",
+                },
               })}
             />
+            {errors.lastname && <span>{errors.lastname.message}</span>}
           </div>
           <div className="card-email">
             <label className="card-label" htmlFor="email">
@@ -145,7 +163,7 @@ export default function ModifUserPage() {
                 },
               })}
             />
-            {errors.email && <span>{errors.message}</span>}
+            {errors.email && <span>{errors.email.message}</span>}
           </div>
           <div className="card-password">
             <label className="card-label" htmlFor="password">
@@ -182,6 +200,9 @@ export default function ModifUserPage() {
                 },
               })}
             />
+            {errors.image_profile && (
+              <span>{errors.image_profile.message}</span>
+            )}
           </div>
 
           {currentUser.role === "admin" && (
@@ -197,6 +218,7 @@ export default function ModifUserPage() {
                   required: "Le rôle est requis",
                 })}
               />
+              {errors.role && <span>{errors.role.message}</span>}
             </div>
           )}
 

@@ -41,7 +41,7 @@
 }
 
 .form-sign input {
-  color: var(--main-color);
+  color: var(--second-color);
   padding-bottom: 1rem;
   border: none;
   border-bottom: solid 1px;

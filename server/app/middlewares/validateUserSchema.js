@@ -41,7 +41,11 @@ const userSchema = z.object({
     })
     .min(2, {
       message: "Votre prénom doit contenir au minimum 2 caractères",
+    })
+    .max(20, {
+      message: "Votre nom doit contenir au maximum 20 caractères",
     }),
+
   email: z.string().regex(emailRegex, {
     message: "votre mail n'a pas le bon format",
   }),
