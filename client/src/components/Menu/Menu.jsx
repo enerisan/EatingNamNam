@@ -32,7 +32,7 @@ function Menu({ currentUser, setCurrentUser }) {
         </li>
         <li className="navbarItem">
           <NavLink
-            to={currentUser ? `/dashboard/${currentUser.id}` : "/"}
+            to={currentUser ? `/dashboard/${currentUser.id}` : "/connexion"}
             className="navbarLink"
             onClick={handleShowLinks}
           >
