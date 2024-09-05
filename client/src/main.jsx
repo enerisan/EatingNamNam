@@ -20,6 +20,7 @@ import UserRecipesPage from "./pages/DashboardPage/UserRecipesPage/UserRecipesPa
 import CookieConsentPage from "./pages/CookieConsentPage/CookieConsentPage";
 import UserFavoritesPage from "./pages/DashboardPage/UserFavoritesPage/UserFavoritesPage";
 import ModifRecipePage from "./pages/DashboardPage/ModifRecipePage/ModifRecipePage";
+import ContactPage from "./pages/ContactPage/ContactPage";
 
 const express = import.meta.env.VITE_API_URL;
 
@@ -62,6 +63,10 @@ const router = createBrowserRouter([
       {
         path: "/about",
         element: <AboutPage />,
+      },
+      {
+        path: "/contact",
+        element: <ContactPage />,
       },
       {
         path: "/admin/users",

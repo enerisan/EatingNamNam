@@ -8,7 +8,7 @@ export default function Footer() {
       <NavLink to="/about" className="footer-link">
         À propos
       </NavLink>
-      <NavLink to="#" className="footer-link">
+      <NavLink to="/contact" className="footer-link">
         Nous contacter
       </NavLink>
       <NavLink to="/conditionsgenerales" className="footer-link">

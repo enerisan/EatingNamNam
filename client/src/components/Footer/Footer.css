@@ -22,7 +22,7 @@
 }
 
 .footer-link:hover {
-  font-weight: bolder;
+  text-decoration: underline;
 }
 
 .footer-link:visited {
