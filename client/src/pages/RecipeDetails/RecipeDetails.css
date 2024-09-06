@@ -71,7 +71,8 @@
 }
 
 .planning,
-.favoris {
+.favoris,
+.commentaireSubmit {
   border: 2px solid var(--main-color);
   border-radius: 1rem;
   background-color: white;
@@ -83,6 +84,9 @@
   color: var(--second-color);
 }
 
+.commentaireSubmit {
+  width: 100%;
+}
 .lineContainer {
   display: flex;
   flex-direction: column;
@@ -150,19 +154,20 @@
 
 .textContainer {
   text-align: center;
-  margin: 20px 0;
+  margin: 1rem 0;
   font-family: "now-medium";
   color: var(--second-color);
 }
 
 .comment-box {
+  width: 100%;
   background-color: #f0f0f0;
   border: 2px solid #ccc;
-  border-radius: 10px;
-  padding: 20px;
-  margin: 20px auto;
+  border-radius: 0.8rem;
+  padding: 1rem;
+  margin: 1rem 0rem;
   text-align: center;
-  font-size: 16px;
+  font-size: 1rem;
   font-family: "now-medium";
   color: var(--second-color);
   background-image: linear-gradient(
@@ -230,8 +235,12 @@
 
   .comment-box {
     padding: 2rem;
-    width: 80%;
+    width: 100%;
     margin: 2rem auto;
     font-size: 1.5rem;
+  }
+
+  .commentaireSubmit {
+    width: 100%;
   }
 }

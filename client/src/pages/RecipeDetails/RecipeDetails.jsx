@@ -217,7 +217,7 @@ function RecipeDetails() {
               type="submit"
               disabled={!currentUser}
             >
-              Envoyez votre commentaire
+              ✍️ Envoyez votre commentaire
             </button>
           </form>
         </div>
