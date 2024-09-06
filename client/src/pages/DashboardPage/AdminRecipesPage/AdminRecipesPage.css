@@ -40,6 +40,7 @@
 .recipe-card-ad {
   display: flex;
   flex-direction: column;
+  align-items: center;
   background-color: white;
   border: 1px solid #ddd;
   border-radius: 10px;
@@ -73,10 +74,8 @@
   padding: 5px 10px;
   margin: 0 10px;
   font-size: 14px;
-
   background-color: var(--main-color);
   border: none;
-
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
@@ -88,6 +87,11 @@
 
 p {
   margin-bottom: 15px;
+}
+
+.btns-modif-supr {
+  display: flex;
+  flex-direction: row;
 }
 
 @media screen and (min-width: 768px) {

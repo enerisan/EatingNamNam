@@ -95,12 +95,10 @@
   }
 
   .recipe-card-user {
-    height: 29rem;
     width: 15%;
   }
 
   .recipe-card-user:hover {
-    height: 30rem;
     width: 17%;
   }
 }

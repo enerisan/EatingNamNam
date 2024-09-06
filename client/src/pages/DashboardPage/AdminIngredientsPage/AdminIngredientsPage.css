@@ -73,7 +73,7 @@
   width: 20rem;
   margin: 10px;
   padding: 1rem;
-  text-align: center;
+  align-items: center;
 }
 
 .img-ingredient-cont {

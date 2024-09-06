@@ -89,61 +89,68 @@ export default function AdminCommentsPage() {
   return (
     <div className="comments-body">
       <UserBar role={role} user_id={user_id} />
-      {comments.map((comment) => (
-        <form
-          key={comment.id}
-          onSubmit={handleSubmit((data) => onSubmit(data, comment.id))}
-        >
-          <label htmlFor={`description-${comment.id}`}>Commentaire:</label>
-          <textarea
-            defaultValue={comment.description}
-            {...register(`description-${comment.id}`, { required: true })}
-            readOnly
-          />
-
-          <label htmlFor={`date-${comment.id}`}>Date:</label>
-          <input
-            type="date"
-            defaultValue={comment.date.split("T")[0]}
-            {...register(`date-${comment.id}`)}
-            readOnly
-          />
-          <label htmlFor={`recipe_id-${comment.id}`}>Recette:</label>
-          <input
-            type="text"
-            defaultValue={comment.recipe_id}
-            {...register(`recipe_id-${comment.id}`, { required: true })}
-            readOnly
-          />
-
-          <label htmlFor={`user_id-${comment.id}`}>Utilisateur:</label>
-          <input
-            type="text"
-            defaultValue={comment.user_id}
-            {...register(`user_id-${comment.id}`, { required: true })}
-            readOnly
-          />
-
-          <label htmlFor={`is_validated-${comment.id}`}>
-            Valider:
-            <input
-              type="checkbox"
-              defaultChecked={comment.is_validated}
-              {...register(`is_validated-${comment.id}`)}
+      <div className="comments-container">
+        {comments.map((comment) => (
+          <form
+            className="comment-card"
+            key={comment.id}
+            onSubmit={handleSubmit((data) => onSubmit(data, comment.id))}
+          >
+            <label htmlFor={`description-${comment.id}`}>Commentaire:</label>
+            <textarea
+              defaultValue={comment.description}
+              {...register(`description-${comment.id}`, { required: true })}
+              readOnly
+              className="comment-content"
             />
-          </label>
 
-          <div>
-            <button type="submit">Enregistrer la modification</button>
-            <button
-              type="button"
-              onClick={() => handleDeleteComment(comment.id)}
-            >
-              Supprimer
-            </button>
-          </div>
-        </form>
-      ))}
+            <label htmlFor={`date-${comment.id}`}>Date:</label>
+            <input
+              type="date"
+              defaultValue={comment.date.split("T")[0]}
+              {...register(`date-${comment.id}`)}
+              readOnly
+            />
+            <label htmlFor={`recipe_id-${comment.id}`}>Recette:</label>
+            <input
+              type="text"
+              defaultValue={comment.recipe_id}
+              {...register(`recipe_id-${comment.id}`, { required: true })}
+              readOnly
+            />
+
+            <label htmlFor={`user_id-${comment.id}`}>Utilisateur:</label>
+            <input
+              type="text"
+              defaultValue={comment.user_id}
+              {...register(`user_id-${comment.id}`, { required: true })}
+              readOnly
+            />
+
+            <label htmlFor={`is_validated-${comment.id}`}>
+              Valider:
+              <input
+                type="checkbox"
+                defaultChecked={comment.is_validated}
+                {...register(`is_validated-${comment.id}`)}
+              />
+            </label>
+
+            <div className="comment-btns-container">
+              <button type="submit" className="comment-btn">
+                Enregistrer la modification
+              </button>
+              <button
+                type="button"
+                className="comment-btn"
+                onClick={() => handleDeleteComment(comment.id)}
+              >
+                Supprimer
+              </button>
+            </div>
+          </form>
+        ))}
+      </div>
     </div>
   );
 }
