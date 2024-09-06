@@ -25,10 +25,6 @@ export default function Searchbar({ currentUser }) {
     d.name.toLowerCase().includes(search.toLowerCase())
   );
 
-  const handleLinkReset = () => {
-    search("");
-  };
-
   return (
     <div className="searchbar">
       <input
@@ -37,6 +33,7 @@ export default function Searchbar({ currentUser }) {
         id="searchbar"
         placeholder="Recherchez une recette"
         onChange={handleSearch}
+        value={search}
       />
       <div
         className={`resultsContainer ${search.length > 1 ? "hasResults" : ""}`}
@@ -45,9 +42,9 @@ export default function Searchbar({ currentUser }) {
           ? filteredDatas.map((f) => (
               <NavLink
                 to={`/details/${f.id}`}
-                onClick={handleLinkReset}
                 className="resultLink"
                 key={f.id}
+                onClick={() => setSearch("")}
               >
                 {f.name}
               </NavLink>
