@@ -18,13 +18,6 @@ export default function Connection() {
   const express = import.meta.env.VITE_API_URL;
 
   const onSubmit = async (data) => {
-    const userConsent = localStorage.getItem("userConsent");
-
-    if (userConsent !== "true") {
-      navigate("/cookies-consent");
-      return;
-    }
-
     try {
       const response = await axios.post(`${express}/api/auth/login`, data, {
         withCredentials: true,
@@ -34,17 +27,7 @@ export default function Connection() {
       navigate(`/`);
     } catch (e) {
       console.error(e);
-      if (
-        e.response?.status === 403 &&
-        e.response?.data?.message ===
-          "Vous devez accepter les cookies pour vous connecter"
-      ) {
-        toast.error("Vous devez accepter les cookies pour vous connecter");
-      } else {
-        toast.error(
-          "Une erreur est survenue, veuillez réessayer ultérieurement"
-        );
-      }
+      toast.error("Une erreur est survenue, veuillez réessayer ultérieurement");
     }
   };
 
