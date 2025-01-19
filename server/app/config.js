@@ -8,6 +8,7 @@ const app = express();
 
 /* ************************************************************************* */
 
+
 // CORS Handling: Why is the current code commented out and do I need to define specific allowed origins for my project?
 
 // CORS (Cross-Origin Resource Sharing) is a security mechanism in web browsers that blocks requests from a different domain than the server.
@@ -27,11 +28,17 @@ const app = express();
 
 const cors = require("cors");
 
-app.use(
+/* app.use(
   cors({
     origin: [
       process.env.CLIENT_URL, // keep this one, after checking the value in `server/.env`
     ],
+    credentials: true,
+  })  
+); */
+app.use(
+  cors({
+    origin: "*",  // Permite todas las conexiones, solo para pruebas
     credentials: true,
   })
 );
