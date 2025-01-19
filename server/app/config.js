@@ -30,12 +30,13 @@ const cors = require("cors");
 app.use(
   cors({
     origin: [
-      process.env.CLIENT_URL, "http://eatingnamnam.enerisan.com" // keep this one, after checking the value in `server/.env`
+      process.env.CLIENT_URL,
+      "http://eatingnamnam.enerisan.com",
+      "https://enerisan.com", // keep this one, after checking the value in `server/.env`
     ],
     credentials: true,
   })
-); 
-
+);
 
 /* app.use(
   cors({
