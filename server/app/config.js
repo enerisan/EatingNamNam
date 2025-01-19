@@ -27,21 +27,16 @@ const app = express();
 
 const cors = require("cors");
 
-/* app.use(
+app.use(
   cors({
     origin: [
-      process.env.CLIENT_URL, // keep this one, after checking the value in `server/.env`
+      process.env.CLIENT_URL, "http://eatingnamnam.enerisan.com" // keep this one, after checking the value in `server/.env`
     ],
     credentials: true,
   })
-); */
+); 
 
-app.use(
-  cors({
-    origin: "http://eatingnamnam.enerisan.com", // Cambia esto por tu dominio real.
-    credentials: true, // Si necesitas cookies o autenticación
-  })
-);
+
 /* app.use(
   cors({
     origin: "*",  // Permite todas las conexiones, solo para pruebas
