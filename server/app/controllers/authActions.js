@@ -55,7 +55,7 @@ const checkAuth = async (req, res) => {
     return res
       .status(200)
       .cookie("auth_token", token, {
-        secure: true, /* solo en prod cambiar a false en dev */
+        secure: true /* solo en prod cambiar, a false en dev */,
         httpOnly: true,
         maxAge: 360000,
       })
