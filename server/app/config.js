@@ -31,8 +31,8 @@ app.use(
   cors({
     origin: [
       process.env.CLIENT_URL,
-      "http://eatingnamnam.enerisan.com",
-      "https://enerisan.com", // keep this one, after checking the value in `server/.env`
+      "https://eatingnamnam-front.onrender.com",
+      "https://eatingnamnam-front.onrender.com", // keep this one, after checking the value in `server/.env`
     ],
     credentials: true,
   })
